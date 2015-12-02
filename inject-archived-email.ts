@@ -1,5 +1,9 @@
 /// <reference path="typings/tsd.d.ts" />
 
+// Simple node script intended to run under Lambda that takes an email ingested into S3 via SES and gives it a more useful name.
+//
+// This is free and unencumbered software released into the public domain.
+
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 
