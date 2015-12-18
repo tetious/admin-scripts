@@ -18,7 +18,7 @@ exports.handler = function (event, context) {
     var to = ses.mail.commonHeaders.to[0].replace(/[^\w@.<>]+/g, "_");
     var subject = ses.mail.commonHeaders.subject.replace(/\W+/g, "_").slice(0,30);
 
-    var newKey = `${date.getFullYear() }/${date.getMonth() + 1}/${date.getDay() }/|${from}|${to}|${subject}|${ses.mail.messageId}.eml`;
+    var newKey = `${date.getFullYear() }/${date.getMonth() + 1}/${date.getDate() }/|${from}|${to}|${subject}|${ses.mail.messageId}.eml`;
 
     s3.copyObject({ Bucket: bucketName, CopySource: `${bucketName}/${oldKey}`, Key: newKey }, (err) => {
         if (err) {
@@ -31,6 +31,7 @@ exports.handler = function (event, context) {
                     context.fail();
                 }
                 else {
+                    console.log(`Copied email from <${from}> to ${newKey}`);
                     context.done();
                 }
             })
